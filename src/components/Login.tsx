@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
-import { AuthContextProps, useAuth } from "../contexts/useAuth";
+import { AuthContextProps, useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -81,6 +81,9 @@ export default function Login() {
               Log In
             </Button>
           </Form>
+          <div className="w-100 text-center mt-3">
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
         </Card.Body>
       </Card>
       {/* The below div is used to redirect to login page */}

@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
-import { AuthContextProps, useAuth } from "../contexts/useAuth";
+import { AuthContextProps, useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {

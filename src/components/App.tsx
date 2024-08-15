@@ -1,11 +1,12 @@
-import React from "react";
 import Signup from "./Signup";
 import { Container } from "react-bootstrap";
-import { AuthProvider } from "../contexts/useAuth";
+import { AuthProvider } from "../contexts/AuthContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Login from "./Login";
-import RequireAuth from "./RequireAuth";
+import ForgotPassword from "./ForgotPassword";
+import PrivateRoute from "./PrivateRoute";
+import UpdateProfile from "./UpdateProfile";
 
 export default function App() {
   return (
@@ -18,16 +19,16 @@ export default function App() {
           <BrowserRouter>
             <AuthProvider>
               <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <RequireAuth>
-                      <Dashboard />
-                    </RequireAuth>
-                  }
-                />
+                {/* Private routes */}
+                <Route element={<PrivateRoute />}>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/profile" element={<Dashboard />} />
+                  <Route path="/update-profile" element={<UpdateProfile />} />
+                </Route>
                 <Route path="/signup" Component={Signup} />
                 <Route path="/login" Component={Login} />
+                <Route path="/forgot-password" Component={ForgotPassword} />
               </Routes>
             </AuthProvider>
           </BrowserRouter>

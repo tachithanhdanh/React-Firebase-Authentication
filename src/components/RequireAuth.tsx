@@ -1,12 +1,13 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { AuthContextProps, useAuth } from "../contexts/useAuth";
+import { AuthContextProps, useAuth } from "../contexts/AuthContext";
 
 export interface RequireAuthProps {
   children: JSX.Element;
 }
 
-// https://stackoverflow.com/a/69870303
+// I used this implementation https://stackoverflow.com/a/69870303
+// This is ok too: https://stackoverflow.com/a/69869761
 export default function RequireAuth({ children }: RequireAuthProps) {
   const { currentUser }: AuthContextProps = useAuth()!;
   const location = useLocation();

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Button, Card } from "react-bootstrap";
-import { AuthContextProps, useAuth } from "../contexts/useAuth";
+import { AuthContextProps, useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Dashboard() {

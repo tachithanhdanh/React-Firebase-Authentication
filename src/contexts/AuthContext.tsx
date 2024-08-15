@@ -3,9 +3,12 @@ import { firebaseAuth } from "../firebase";
 
 export interface AuthContextProps {
   currentUser: firebase.default.User | null;
-  signup: (email: string, password: string) => Promise<void>;
-  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<firebase.default.auth.UserCredential>;
+  login: (email: string, password: string) => Promise<firebase.default.auth.UserCredential>;
   logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
+  updateEmail: (email: string) => Promise<void>;
+  updatePassword: (password: string) => Promise<void>;
 }
 
 const AuthContext = React.createContext<AuthContextProps | null>(null);
@@ -26,19 +29,31 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Loading is false when the user is available
   const [loading, setLoading] = React.useState<boolean>(true);
 
-  async function signup(email: string, password: string): Promise<void> {
+  async function signup(email: string, password: string): Promise<firebase.default.auth.UserCredential> {
     // Signup logic here
-    await firebaseAuth.createUserWithEmailAndPassword(email, password);
+    return await firebaseAuth.createUserWithEmailAndPassword(email, password);
   }
 
-  async function login(email: string, password: string): Promise<void> {
+  async function login(email: string, password: string): Promise<firebase.default.auth.UserCredential> {
     // Login logic here
-    await firebaseAuth.signInWithEmailAndPassword(email, password);
+    return await firebaseAuth.signInWithEmailAndPassword(email, password);
   }
 
   async function logout(): Promise<void> {
     // Logout logic here
-    await firebaseAuth.signOut();
+    return await firebaseAuth.signOut();
+  }
+
+  async function resetPassword(email: string): Promise<void> {
+    return await firebaseAuth.sendPasswordResetEmail(email);
+  }
+
+  async function updateEmail(email: string): Promise<void> {
+    return currentUser!.updateEmail(email);
+  }
+
+  async function updatePassword(password: string): Promise<void> {
+    return currentUser!.updatePassword(password);
   }
 
   useEffect(() => {
@@ -62,7 +77,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     currentUser,
     signup,
     login,
-    logout
+    logout,
+    resetPassword,
+    updateEmail,
+    updatePassword
   };
   return (
     <AuthContext.Provider value={value}>
