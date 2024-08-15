@@ -5,6 +5,7 @@ import { AuthProvider } from "../contexts/useAuth";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import Login from "./Login";
+import RequireAuth from "./RequireAuth";
 
 export default function App() {
   return (
@@ -17,7 +18,14 @@ export default function App() {
           <BrowserRouter>
             <AuthProvider>
               <Routes>
-                <Route path="/" Component={Dashboard} />
+                <Route
+                  path="/"
+                  element={
+                    <RequireAuth>
+                      <Dashboard />
+                    </RequireAuth>
+                  }
+                />
                 <Route path="/signup" Component={Signup} />
                 <Route path="/login" Component={Login} />
               </Routes>
